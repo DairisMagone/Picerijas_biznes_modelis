@@ -19,8 +19,9 @@ Choose option:
 2-Create New Pizza
 3-View Ingredients
 4-Create New Ingredient
+5-Edit Ingredient
 
-0-Exit
+99-Exit
 ";
 			Console.Clear();
 			Console.WriteLine(mainMenu);

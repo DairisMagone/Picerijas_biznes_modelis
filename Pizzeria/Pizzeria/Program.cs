@@ -1,4 +1,7 @@
 ﻿using System;
+using Pizzeria.Services;
+using Pizzeria.DA;
+using Pizzeria.Services.Enums;
 using Pizzeria.UI;
 
 namespace Pizzeria
@@ -8,38 +11,45 @@ namespace Pizzeria
 		static void Main(string[] args)
 		{
 			bool exit = false;
-			while (exit == false)
+			while (!exit)
 			{
 				MainMenu.ShowMainMenu();
 				string option = Console.ReadLine();
 
-				exit = DoActionBySelectedOption(option);
-
+				MainMenuActions action = MainmenuActionsExtensions.StringToMainMenuAction(option);
+				exit = DoAction(action);
 			}
+			Console.WriteLine("Press any key to continue.");
+			Console.ReadLine();
 		}
-		public static bool DoActionBySelectedOption(string action)
+		public static bool DoAction(MainMenuActions action)
 		{
 			bool exit = false;
 
 			switch (action)
 			{
-				case "1":
+				case MainMenuActions.ViewPizzas:
 					ViewPizzas();
 					break;
-				case "2":
+				case MainMenuActions.CreateNewPizza:
 					CreatePizza();
 					break;
-				case "3":
-					ViewIngredients();
+				case MainMenuActions.ViewIngredients:
+					IngredientUI.PrintIngredients(true);
 					break;
-				case "4":
+				case MainMenuActions.CreateNewIngredient:
 					IngredientUI.CreateIngredient();
 					break;
-				case "0":
+				case MainMenuActions.EditIngredient:
+					IngredientUI.EditIngredients();
+					break;
+				case MainMenuActions.Exit:
 					exit = true;
 					break;
 
+				case MainMenuActions.None:
 				default:
+					Console.WriteLine("Unknown action");
 					break;
 			}
 
@@ -47,23 +57,21 @@ namespace Pizzeria
 		}
 		static void ViewPizzas()
 		{
+			Console.Clear();
 			Console.WriteLine("There will be list of all Pizzas");
-			Console.WriteLine("Press any key to continue.");
 			Console.ReadLine();
 		}
 
 		static void CreatePizza()
 		{
+			Console.Clear();
 			Console.WriteLine("There we will create Pizza");
-			Console.WriteLine("Press any key to continue.");
-			Console.ReadLine();
-		}
-		static void ViewIngredients()
-		{
-			Console.WriteLine("There will be list of all Ingredients");
-			Console.WriteLine("Press any key to continue.");
 			Console.ReadLine();
 		}
 
+		//1. Testu 
+		//3. Interface
 	}
 }
+
+

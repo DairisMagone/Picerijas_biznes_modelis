@@ -1,4 +1,4 @@
-﻿using Pizzeria.BL;
+﻿using Pizzeria.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,32 +8,52 @@ namespace Pizzeria.DA
 {
 	public static class IngredientRepository
 	{
-
-		// te ir lietots List. Vai nav kāds labāks variants?
-		// Hint: kaut kas, kas kontrolē, ka ID ir unikāls
-		private static List<Ingredient> ingredients = new List<Ingredient>();
+		private static Dictionary<int, Ingredient> ingredients = new Dictionary<int, Ingredient>();
 
 		private static int GetNewID()
 		{
 			int maxId = GetMaxID();
-			return maxId + 1;
+				return maxId + 1;
 		}
-
 		private static int GetMaxID()
 		{
-			/*
-			 * Failā atradīs lielāko Max Ingredient ID (kā no lista dabūt maxID? (google))
-			 */
-			return 1;
+			if (ingredients.Keys.Count == 0)
+				return 0;
+
+			var maxId = ingredients.Keys.Max();
+			return maxId;
 		}
 
-		public static void SaveNewIngredient(Ingredient ingredient)
+		public static void CreateOrUpdateIngredient(Ingredient ingredient)
 		{
-			ingredient.Id = GetNewID();
-
-			// ToDo - atrast kā pievienot ingeredientu listam
-
+			bool ingredientExist = ingredients.ContainsKey(ingredient.Id);
+			if (ingredientExist)
+			{
+				ingredients[ingredient.Id] = ingredient;
+			}
+			else 
+			{
+				ingredient.Id = GetNewID();
+				ingredients.Add(ingredient.Id, ingredient);
+			}
 		}
+
+		public static List<Ingredient> GetIngredients()
+		{
+			return ingredients.Select(x=>x.Value).ToList();
+		}
+
+		public static Ingredient GetById(int id)
+		{
+			Ingredient ingredient = null;
+			ingredients.TryGetValue(id, out ingredient);
+			return ingredient;
+		}
+
+		//public static void UpdateIngredient(Ingredient, ingredient)
+		//{
+
+		//}
 
 
 	}
