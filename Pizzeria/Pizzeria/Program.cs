@@ -16,7 +16,7 @@ namespace Pizzeria
 				MainMenu.ShowMainMenu();
 				string option = Console.ReadLine();
 
-				MainMenuActions action = MainmenuActionsExtensions.StringToMainMenuAction(option);
+				MainMenuActions action = MainMenuActionsExtensions.StringToMainMenuAction(option);
 				exit = DoAction(action);
 			}
 			Console.WriteLine("Press any key to continue.");
@@ -68,8 +68,6 @@ namespace Pizzeria
 			Console.WriteLine("There we will create Pizza");
 			Console.ReadLine();
 		}
-
-		//1. Testu 
 		//3. Interface
 	}
 }

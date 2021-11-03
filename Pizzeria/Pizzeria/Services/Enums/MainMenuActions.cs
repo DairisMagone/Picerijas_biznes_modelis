@@ -17,18 +17,20 @@ namespace Pizzeria.Services.Enums
 
 		Exit = 99,
 	}
-	public static class MainmenuActionsExtensions
+	public static class MainMenuActionsExtensions
 	{
 		public static MainMenuActions StringToMainMenuAction(string optionStr)
 		{
-			bool canParse = int.TryParse(optionStr, out int optionInt);
-			if (canParse && typeof(MainMenuActions).IsEnumDefined(optionInt))
+			bool isIntValid = int.TryParse(optionStr, out int optionInt);
+			if (isIntValid)
 			{
-				return (MainMenuActions)optionInt;
+				if (typeof(MainMenuActions).IsEnumDefined(optionInt))
+				{
+					return (MainMenuActions)optionInt;
+				}
 			}
 			return MainMenuActions.None;
 		}
-
 	}
 
 }

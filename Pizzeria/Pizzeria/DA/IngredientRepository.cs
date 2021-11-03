@@ -49,12 +49,5 @@ namespace Pizzeria.DA
 			ingredients.TryGetValue(id, out ingredient);
 			return ingredient;
 		}
-
-		//public static void UpdateIngredient(Ingredient, ingredient)
-		//{
-
-		//}
-
-
 	}
 }
