@@ -8,24 +8,30 @@ namespace Pizzeria.UI
 {
 	public class IngredientUI
 	{
-		public static void CreateIngredient()
+		IIngredientsRepository _repository;
+		public IngredientUI(IIngredientsRepository repository)
+		{
+			_repository = repository;
+		}
+
+		public void CreateIngredient()
 		{
 			Console.Clear();
 
 			Console.WriteLine("Enter Ingredient Name: ");
 			string name = Console.ReadLine();
 
-			Ingredient ingredient = new Ingredient();
-			ingredient.Name = name;
-			ingredient.Save();
+			Ingredient ingredient = new Ingredient() { Name = name };
+			_repository.CreateOrUpdateIngredient(ingredient);
 
 			Console.WriteLine("Press any key to continue.");
 			Console.ReadLine();
 		}
-		public static void PrintIngredients(bool needReadLine)
+
+		public void PrintIngredients(bool needReadLine)
 		{
 			Console.Clear();
-			var myIngredients = Ingredient.GetIngredients();
+			var myIngredients = _repository.GetIngredients();
 			foreach (var eachIngr in myIngredients)
 			{
 				Console.WriteLine($"Ingredient ID: {eachIngr.Id}, Ingredient: {eachIngr.Name}");
@@ -36,7 +42,7 @@ namespace Pizzeria.UI
 			}
 		}
 
-		public static void EditIngredients()
+		public void EditIngredients()
 		{
 			Console.Clear();
 			PrintIngredients(false);
@@ -49,21 +55,20 @@ namespace Pizzeria.UI
 			if (int.TryParse(ingredientIdToUpdateText, out int ingredientIdToUpdate))
 			{
 				Ingredient ingredient = null;
-				ingredient = Ingredient.GetById(ingredientIdToUpdate);
+				ingredient = _repository.GetIngredientById(ingredientIdToUpdate);
 				if (ingredient == null)
 				{
-					Console.WriteLine($"Unknown Ingredient ID {ingredientIdToUpdateText} "); // izdomāt kā apvienot vienādās CW rindas.
+					Console.WriteLine($"Unknown Ingredient ID {ingredientIdToUpdateText} ");
 				}
 				else
 				{
 					Console.WriteLine("Enter Ingredient Name: ");
 					string name = Console.ReadLine();
 					ingredient.Name = name;
-					ingredient.Save();
+					_repository.CreateOrUpdateIngredient(ingredient);
 				}
-
-				//Updating ingredient with ID ID=ingredirntToUpdate.
 			}
+
 			else
 			{
 				Console.WriteLine($"Unknown Ingredient ID {ingredientIdToUpdateText} ");

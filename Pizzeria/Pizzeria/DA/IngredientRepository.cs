@@ -1,21 +1,23 @@
 ﻿using Pizzeria.Services;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Pizzeria.DA
 {
-	public static class IngredientRepository
+	public class IngredientRepository : IIngredientsRepository
 	{
-		private static Dictionary<int, Ingredient> ingredients = new Dictionary<int, Ingredient>();
+		private  Dictionary<int, Ingredient> ingredients = new Dictionary<int, Ingredient>();
 
-		private static int GetNewID()
+		private int GetNewID()
 		{
 			int maxId = GetMaxID();
 				return maxId + 1;
 		}
-		private static int GetMaxID()
+		private int GetMaxID()
 		{
 			if (ingredients.Keys.Count == 0)
 				return 0;
@@ -24,7 +26,7 @@ namespace Pizzeria.DA
 			return maxId;
 		}
 
-		public static void CreateOrUpdateIngredient(Ingredient ingredient)
+		public void CreateOrUpdateIngredient(Ingredient ingredient)
 		{
 			bool ingredientExist = ingredients.ContainsKey(ingredient.Id);
 			if (ingredientExist)
@@ -38,16 +40,22 @@ namespace Pizzeria.DA
 			}
 		}
 
-		public static List<Ingredient> GetIngredients()
+		public List<Ingredient> GetIngredients()
 		{
 			return ingredients.Select(x=>x.Value).ToList();
 		}
 
-		public static Ingredient GetById(int id)
+		public Ingredient GetIngredientById(int id)
 		{
 			Ingredient ingredient = null;
 			ingredients.TryGetValue(id, out ingredient);
 			return ingredient;
 		}
+
+		public void Write(string text)
+		{
+			File.AppendAllText("Ingr_Reposiory.txt",text + Environment.NewLine);
+		}
+
 	}
 }

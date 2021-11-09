@@ -10,20 +10,26 @@ namespace Pizzeria
 	{
 		static void Main(string[] args)
 		{
+			IngredientRepository repository = new IngredientRepository();
+			IngredientUI ui = new IngredientUI(repository);
+			MainMenu menu = new MainMenu();
+
 			bool exit = false;
 			while (!exit)
 			{
-				MainMenu.ShowMainMenu();
+				menu.ShowMainMenu();
 				string option = Console.ReadLine();
 
 				MainMenuActions action = MainMenuActionsExtensions.StringToMainMenuAction(option);
-				exit = DoAction(action);
+				exit = DoAction(action, ui);
 			}
 			Console.WriteLine("Press any key to continue.");
 			Console.ReadLine();
 		}
-		public static bool DoAction(MainMenuActions action)
+
+		public static bool DoAction(MainMenuActions action, IngredientUI ui)
 		{
+
 			bool exit = false;
 
 			switch (action)
@@ -35,13 +41,13 @@ namespace Pizzeria
 					CreatePizza();
 					break;
 				case MainMenuActions.ViewIngredients:
-					IngredientUI.PrintIngredients(true);
+					ui.PrintIngredients(true);
 					break;
 				case MainMenuActions.CreateNewIngredient:
-					IngredientUI.CreateIngredient();
+					ui.CreateIngredient();
 					break;
 				case MainMenuActions.EditIngredient:
-					IngredientUI.EditIngredients();
+					ui.EditIngredients();
 					break;
 				case MainMenuActions.Exit:
 					exit = true;

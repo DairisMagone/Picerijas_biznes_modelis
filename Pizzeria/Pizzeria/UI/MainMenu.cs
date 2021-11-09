@@ -6,26 +6,43 @@ using System.Threading.Tasks;
 
 namespace Pizzeria.UI
 {
-	public static class MainMenu
+	public class MainMenu : MenuItem
 	{
-		public static void ShowMainMenu()
+		List<MenuItem> menuItems = new List<MenuItem>()
 		{
-			string mainMenu = @"
+			new MenuItem(1, "View Pizzas"),
+			new MenuItem(2, "Create New Pizza"),
+			new MenuItem(3, "View Ingredients"),
+			new MenuItem(4, "Create New Ingredient"),
+			new MenuItem(5, "Edit Ingredient"),
+			new MenuItem(99, "Exit"),
+		};
+		public override string GetDisplayTitle() 
+		{
+			string mainMenuText = @"
 Welcome to My Pizza Menu!
 
 Choose option:
-
-1-View Pizzas
-2-Create New Pizza
-3-View Ingredients
-4-Create New Ingredient
-5-Edit Ingredient
-
-
-99-Exit
 ";
+			foreach (var menuItem in this.menuItems)
+			{
+				mainMenuText += Environment.NewLine;
+				bool isExitMenu = menuItem.Code == 99;
+				if (isExitMenu) 
+				{
+					mainMenuText += Environment.NewLine; 
+					mainMenuText += Environment.NewLine;
+				}
+				mainMenuText += menuItem.GetDisplayTitle();
+			}
+
+			return mainMenuText;
+		}
+		public void ShowMainMenu()
+		{
 			Console.Clear();
-			Console.WriteLine(mainMenu);
+			string mainMenuText = this.GetDisplayTitle();
+			Console.WriteLine(mainMenuText);
 		}
 	}
 }
