@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pizzeria.Exceptions;
 
 namespace Pizzeria.Services.Enums
 {
@@ -29,7 +30,9 @@ namespace Pizzeria.Services.Enums
 					return (MainMenuActions)optionInt;
 				}
 			}
-			return MainMenuActions.None;
+			throw new MainMenuActionDoesnotExsistException($"{optionStr} is not valid value for Main Menu Action");
+
+		//	return MainMenuActions.None;
 		}
 	}
 

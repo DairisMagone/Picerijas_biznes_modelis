@@ -48,7 +48,8 @@ namespace Pizzeria.UI
 			PrintIngredients(false);
 			Console.WriteLine("Chose Ingredient ID to update: ");
 			Console.WriteLine("Press '0' to cancel.");
-			var ingredientIdToUpdateText = Console.ReadLine();
+
+				var ingredientIdToUpdateText = Console.ReadLine();
 			if (ingredientIdToUpdateText == "0")
 				return;
 

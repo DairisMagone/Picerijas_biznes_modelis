@@ -19,9 +19,19 @@ namespace Pizzeria
 			{
 				menu.ShowMainMenu();
 				string option = Console.ReadLine();
-
-				MainMenuActions action = MainMenuActionsExtensions.StringToMainMenuAction(option);
-				exit = DoAction(action, ui);
+				try
+				{
+					
+					MainMenuActions action = MainMenuActionsExtensions.StringToMainMenuAction(option);
+					exit = DoAction(action, ui);
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine($"Unexpected error: {ex.Message}");
+					Console.WriteLine("Please try again.");
+					Console.WriteLine("Press any key to continue.");
+					Console.ReadLine();
+				}
 			}
 			Console.WriteLine("Press any key to continue.");
 			Console.ReadLine();
@@ -74,7 +84,6 @@ namespace Pizzeria
 			Console.WriteLine("There we will create Pizza");
 			Console.ReadLine();
 		}
-		//3. Interface
 	}
 }
 
