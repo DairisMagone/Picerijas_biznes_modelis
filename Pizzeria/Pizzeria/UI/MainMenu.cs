@@ -34,6 +34,7 @@ Choose option:
 					mainMenuText += Environment.NewLine;
 				}
 				mainMenuText += menuItem.GetDisplayTitle();
+
 			}
 
 			return mainMenuText;
