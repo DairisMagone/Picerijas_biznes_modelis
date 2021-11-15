@@ -1,1 +1,1 @@
-# Picerijas_biznes_modelis
+# Picerijas_biznesa_modelis
